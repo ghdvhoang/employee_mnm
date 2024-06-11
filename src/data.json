@@ -1,31 +1,31 @@
 [
     {
       "id": 1,
-      "task": "Đi tập gym",
+      "name": "Đi tập gym",
       "priority": "High",
       "status": "To Do"
     },
     {
       "id": 2,
-      "task": "Đọc sách",
+      "name": "Đọc sách",
       "priority": "Low",
       "status": "Done"
     },
     {
       "id": 3,
-      "task": "Đi chợ",
+      "name": "Đi chợ",
       "priority": "Medium",
       "status": "In Progress"
     },
     {
       "id": 4,
-      "task": "Học React",
+      "name": "Học React",
       "priority": "High",
       "status": "To Do"
     },
     {
       "id": 5,
-      "task": "Gửi email báo cáo",
+      "name": "Gửi email báo cáo",
       "priority": "Medium",
       "status": "In Progress"
     }

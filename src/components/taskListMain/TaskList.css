@@ -7,10 +7,10 @@ body {
 .container-task, .contain-add-list{
     width: 600px;
     margin: 0 auto 30px;
-    border: 1px solid white;
     padding: 15px;
-    background-color: pink;
+    border: 1px solid white;
     border-radius: 15px;
+    background-color: pink;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
@@ -27,6 +27,7 @@ body {
 .header button{
     font-size: 18px;
     color: black;
+    background-color: white;
     border: none;
     border-radius: 100px;
     padding: 8px;
@@ -65,15 +66,16 @@ li{
     gap: 20px;
 }
 .Icon .fa-spinner {
-    color: #f39c12;
+    color: #D98CB3;
+    font-weight: 700;
   }
   
   .Icon .fa-wrench {
-    color: #3498db; 
+    color: #20B2AA; 
   }
   
   .Icon .fa-trash {
-    color: #e74c3c; 
+    color: red; 
   }
 p{
     color: white;
@@ -128,3 +130,25 @@ p{
     display: block;
     margin-left: auto;
 }
+/* .Task, .Priority{
+    color: pink;
+    font-size: 15px;
+} */
+.DELETE-ALL{
+    color: white;
+    background: red;
+    border: none;
+    width: 150px;
+    padding: 10px;
+    margin: 20px auto;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+
