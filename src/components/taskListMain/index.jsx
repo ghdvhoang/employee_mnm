@@ -1,4 +1,4 @@
-import { faSpinner, faTrash, faWrench } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faWrench } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, useEffect } from 'react';
 import data from '../../data.json';
@@ -11,14 +11,18 @@ function DisplayTask() {
   const [ priority, setPriority ] = useState('Medium')
   const [ isEditing, setIsEditing ] = useState(false)
   const [editingTask, setEditingTask] = useState(null);
+  const [ error, setError ] = useState('')
 
   useEffect(() => {
     getTasks(data)
   }, [])
 
-  
-  
   const handleSubmit = () => {
+    if(!task || task.length > 10){
+      setError(" Ko cho nhập haha ")
+      return
+    }
+    setError('')
     if(isEditing) {
       const updatedTasks = tasks.map(t =>
         t.id === editingTask.id ? { ...t, name: task, priority: priority } : t
@@ -78,12 +82,12 @@ function DisplayTask() {
                 </span>
               </div>
               <div className="Status">
-                <span></span>
+                <span>{task.status}</span>
               </div>
               <div className="Icon">
-                <FontAwesomeIcon icon={faSpinner} />
+                {/* <FontAwesomeIcon icon={faSpinner} /> */}
                 <button
-                  className='edit-btn '
+                  className='edit-btn'
                   onClick={ () => handleEditClick(task)}
                 > 
                   <FontAwesomeIcon icon={faWrench} />
@@ -114,25 +118,29 @@ function DisplayTask() {
           placeholder="Type your task here..."
           onChange = {(event) => setTask(event.target.value)} 
           />
-          <span className='Priority-title'>Priority</span>
-        <div className="priority-btn">
-          <button 
-            className={ priority === 'High' ? 'high active' : 'high' } 
-            onClick={ () => handlePriorityClick('High')}
-            >
-              High
-          </button>
-          <button 
-            className={ priority === 'Medium' ? 'medium active' : 'medium' } 
-            onClick={ () => handlePriorityClick('Medium')}>
-              Medium
-          </button>
-          <button 
-            className={ priority === 'Low' ? 'low active' : 'low' } 
-            onClick={ () => handlePriorityClick('Low')}>
-              Low
-          </button>
-        </div>
+          {!!error && <span style= {{ color: 'red' }}>{ error } </span>}
+
+          <div className="div">
+            <span className='Priority-title'>Priority</span>
+            <div className="priority-btn">
+              <button 
+                className={ priority === 'High' ? 'high active' : 'high' } 
+                onClick={ () => handlePriorityClick('High')}
+                >
+                  High
+              </button>
+              <button 
+                className={ priority === 'Medium' ? 'medium active' : 'medium' } 
+                onClick={ () => handlePriorityClick('Medium')}>
+                  Medium
+              </button>
+              <button 
+                className={ priority === 'Low' ? 'low active' : 'low' } 
+                onClick={ () => handlePriorityClick('Low')}>
+                  Low
+              </button>
+            </div>
+          </div>
         <button className='addBtn' onClick={handleSubmit}> { isEditing ? 'Edit' : 'Add' }</button>
       </div>
     </div>
@@ -141,4 +149,8 @@ function DisplayTask() {
   )
 }
 
-export default DisplayTask
+export default DisplayTask 
+
+
+
+
