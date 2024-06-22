@@ -1,72 +1,109 @@
-*{
-    margin: 0;padding: 0;
-}
+
 body {
     font-family: 'Segoe UI', sans-serif;
 }
 .container-task, .contain-add-list{
-    width: 600px;
-    margin: 0 auto 30px;
-    padding: 15px;
-    border: 1px solid white;
-    border-radius: 15px;
-    background-color: pink;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    width: 1465px;
+    height: auto;
+    margin: 0 auto;
 }
 .header{
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
+    padding: 15px;
+    background-image: linear-gradient( to right,rgb(29 156 249), rgb(4 250 173));
 }
-.header h2{
-    font-size: 24px;
-    font-weight: 700;
+
+.header h1{
+    color: white;
+    font-weight: 400;
 }
-.header button{
-    font-size: 18px;
-    color: black;
-    background-color: white;
-    border: none;
-    border-radius: 100px;
-    padding: 8px;
-    cursor: pointer;
-}
-.addButton{
-    font-size: 18px;
-    color: black;
-    background-color: white;
-    border: none;
-    border-radius: 100px;
-    padding: 8px;
-    cursor: pointer;
-}
-ul{
-    display:flex;
-    flex-direction:column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-li{
-    width: 550px;
-    list-style-type: none;
+.button-wrap{
     display: flex;
     align-items: center;
-    gap: 50px;
+    gap: 20px;
+}
+.DELETE-ALL{
+    color: white;
+    background: red;
+    border: none;
+    width: 150px;
+    padding: 13px;
     font-size: 18px;
-    background-color: white;
-    border-radius: 20px;
+}
+.addButton {
+    font-size: 18px;
+    color: black;
+    background-color: rgb(86 187 91);
+    border: none;
+    padding: 13px;
+    cursor: pointer;
+}
+
+.employee-table {
+    width: 100%; 
+    border-collapse: collapse; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.employee-table th,
+.employee-table td {
     padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
 }
-.priority-text{
-    font-weight: 700;
-    margin-top: 5px;
+
+.employee-table th {
+    background-color: transparent; 
+    font-weight: bold;
+    color: #333; 
 }
-.Task,
-.Priority,
-.Status {
+.employee-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.employee-table input[type="checkbox"] {
+    width: 18px; 
+    height: 18px;
+}
+
+.employee-table .edit-btn,
+.employee-table .delete-btn {
+    margin-left: 5px; 
+    padding: 5px 10px;
+    border: none; 
+    border-radius: 3px; 
+    cursor: pointer;
+}
+
+.employees_data{
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+}
+
+.employee-table td:last-child { 
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.employee-table .edit-btn {
+    background-color: #ffc107; 
+    color: white;
+}
+
+.employee-table .delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.Task {
     flex: 1;
 }
 .column{
@@ -82,20 +119,17 @@ li{
     color: #D98CB3;
     font-weight: 700;
 }
-
 .Icon .fa-wrench {
     color: #20B2AA; 
 }
-
 .Icon .fa-trash {
     color: red; 
 }
 
-.Task-title,
-.Priority-title{
+.Task-title{
     color: white;
     font-size: 20px;
-    margin: 20px 0;
+    margin: 20px 20px;
     font-weight: 700;
 }
 .input-add-task{
@@ -104,56 +138,6 @@ li{
     border-radius: 15px;
     border: 1px solid white;
     margin-bottom: 20px;
-}
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-}
-
-.priority-btn {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-}
-
-.high {
-    padding: 10px 20px;
-    background-color: white;
-    border: 2px solid red;
-    border-radius: 10px;
-    color: red;
-}
-
-.medium {
-    padding: 10px 20px;
-    background-color: white;
-    border: 2px solid gold;
-    border-radius: 10px;
-    color: gold;
-}
-
-.low {
-    padding: 10px 20px;
-    background-color: white;
-    border: 3px solid green;
-    border-radius: 10px;
-    color: green;
-}  
-
-.high.active {
-    background-color: red;
-    color: white;
-}
-
-.medium.active {
-    background-color: gold;
-    color: white;
-}
-
-.low.active {
-    background-color: green;
-    color: white;
 }
 
 
@@ -168,18 +152,6 @@ li{
     margin-left: auto;
 }
 
-.DELETE-ALL{
-    color: white;
-    background: red;
-    border: none;
-    width: 150px;
-    padding: 10px;
-    margin: 20px auto;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 .contain-add-list{
     position: absolute;
     top: 50%;
@@ -195,6 +167,17 @@ li{
     background-color: rgba(0, 0, 0, 0.5); 
     z-index: 10;
 }
+.header-formAddEdit{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 15px;
+    color: #fff;
+}
 
-
+.header-formAddEdit h1{
+    color: #fff;
+    font-weight: 400;
+}
 

@@ -1,10 +1,10 @@
-import DisplayTask from "./components/taskListMain/index.jsx"
+import DisplayData from "./components/taskListMain/index.jsx"
 function App() {
 
   return (
     <>
       <div>
-      <DisplayTask />
+      <DisplayData />
       </div>
     </>
   )

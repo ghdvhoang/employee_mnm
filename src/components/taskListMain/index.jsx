@@ -4,152 +4,201 @@ import { useState, useEffect } from 'react';
 import data from '../../data.json';
 import './TaskList.css'
 
-function DisplayTask() {
-  const [ task, setTask ] = useState('')
-  const [ tasks, getTasks ] = useState([])
+function Employees_info() {
+  const [ employee, getEmployee ] = useState({ name: '', email: '', address: '', number: '' })
+  const [ employees, setEmployees ] = useState([])
   const [ formAdd, setFormAdd] = useState(false)
-  const [ priority, setPriority ] = useState('Medium')
   const [ isEditing, setIsEditing ] = useState(false)
-  const [editingTask, setEditingTask] = useState(null);
+  const [ editingEmployee, setEditingEmployee ] = useState(null);
   const [ error, setError ] = useState('')
 
   useEffect(() => {
-    getTasks(data)
+    setEmployees(data)
   }, [])
 
   const handleSubmit = () => {
-    if(!task || task.length > 10){
+    if( !employee || employee.length > 100){
       setError(" Ko cho nhập haha ")
       return
     }
     setError('')
     if(isEditing) {
-      const updatedTasks = tasks.map(t =>
-        t.id === editingTask.id ? { ...t, name: task, priority: priority } : t
+      const updatedEmployees = employees.map(employee =>
+        employee.id === editingEmployee.id ? {
+          ...employee,
+          name: employee.name,
+          email: employee.email,
+          address: employee.address, 
+          number: employee.number
+        } : employee
       );
-      getTasks(updatedTasks);
-      setEditingTask(null);
-      setIsEditing(false);
+      setEmployees(updatedEmployees)
+      getEmployee('')
+      setIsEditing(false)
+      setEditingEmployee(null)
+      setFormAdd(false)
     }
     else {
-      getTasks(prev => [...prev, { id: Date.now(), name: task, priority: priority} ])
+      setEmployees(prev => [...prev, {
+        id: Date.now(),
+        name:    employee.name,
+        email:   employee.email,
+        address: employee.address,
+        number:  employee.number 
+      }])
+      setFormAdd(false)
+      getEmployee('')
+      setIsEditing(false)
     }
-    setTask('')
-    setFormAdd(false)
-    setPriority('Medium')
   }
-  const handleEditClick = (task) => {
+  const handleEditClick = (employee) => {
     setFormAdd(true)
+    console.log(formAdd)
     setIsEditing(true)
-    setEditingTask(task)
-    setTask(task.name)
-    setPriority(task.priority)
-  }
-  const handlePriorityClick = (newPriority) => {
-    setPriority(newPriority)
+    setEditingEmployee({
+      name: employee.name,
+      email: employee.email,
+      address: employee.address,
+      number: employee.number
+    })
+    console.log(isEditing)
+    console.log(editingEmployee)
+    getEmployee({
+      name: employee.name,
+      email: employee.email,  
+      address: employee.address, 
+      number: employee.number
+    })
   }
   const handleAddClick = () => {
     setFormAdd(true)
   }
-  // 1
 
   const handleDelete = (id) => {
-    // getTasks(prevTasks => prevTasks.filter((_, i) => i!== index ))
-    getTasks(prevTasks => prevTasks.filter(tasks => tasks.id !== id))
+    setEmployees(prevEmployees => prevEmployees.filter(employees => employees.id !== id))
+  }
+  const handleInputChange = (event) => {
+    const {name, value} = event.target
+    getEmployee(prev => ({...prev, [name]: value}))
+  }
+  const handleCloseForm = () => {
+    setFormAdd(false)
+    setIsEditing(false)
+    setEditingEmployee(null)
+    getEmployee('')
   }
 
   return (
     <div className="container">
       <div className="container-task">
         <div className="header">
-          <h2>Task List</h2>
-          <button className='addButton' onClick={ handleAddClick }> 
-            + Add Task
-          </button>
-        </div>
-        <ul>
-          {tasks.map( (task) => (
-            <li key={ task.id }>
-              <div className="Task column"> 
-                <b>Task</b> 
-                <span>{task.name}</span>
-              </div>
-              <div className="Priority column ">
-                <b>Priority</b> 
-                <span className='priority-text'
-                  style={{ color: task.priority === 'High' ? 'red' : task.priority === 'Medium' ? 'gold' : 'green' }}>
-                    {task.priority}
-                </span>
-              </div>
-              <div className="Status">
-                <span>{task.status}</span>
-              </div>
-              <div className="Icon">
-                {/* <FontAwesomeIcon icon={faSpinner} /> */}
-                <button
-                  className='edit-btn'
-                  onClick={ () => handleEditClick(task)}
-                > 
-                  <FontAwesomeIcon icon={faWrench} />
-                </button>
-                <button
-                  className='delete-btn '
-                  onClick={ () => handleDelete(task.id) }
-                  > 
-                    <FontAwesomeIcon icon={faTrash} /> 
-                </button>
-              </div>
-          </li>
-          ))}
-        </ul>
-        <button className='DELETE-ALL' onClick={ () => getTasks([])}> DELETE ALL </button>
-      </div>
-  {formAdd &&
-    <div className="addF-wrapper">
-      <div className='contain-add-list'> 
-        <div className="header">
-            <h2> { isEditing ? 'Edit Task' : 'Add Task' }</h2>
-            <button onClick={ () => setFormAdd(false) }>x</button>
-        </div>
-        <span className='Task-title'>Task</span>
-          <input
-          value={task}
-          className="input-add-task"
-          placeholder="Type your task here..."
-          onChange = {(event) => setTask(event.target.value)} 
-          />
-          {!!error && <span style= {{ color: 'red' }}>{ error } </span>}
-
-          <div className="div">
-            <span className='Priority-title'>Priority</span>
-            <div className="priority-btn">
-              <button 
-                className={ priority === 'High' ? 'high active' : 'high' } 
-                onClick={ () => handlePriorityClick('High')}
-                >
-                  High
-              </button>
-              <button 
-                className={ priority === 'Medium' ? 'medium active' : 'medium' } 
-                onClick={ () => handlePriorityClick('Medium')}>
-                  Medium
-              </button>
-              <button 
-                className={ priority === 'Low' ? 'low active' : 'low' } 
-                onClick={ () => handlePriorityClick('Low')}>
-                  Low
-              </button>
-            </div>
+          <h1>Manage <b>Employees</b></h1>
+          <div className="button-wrap">
+            <button className='DELETE-ALL' onClick={ () => setEmployees([])}> Delete all </button>
+            <button className='addButton' onClick={ handleAddClick }> 
+              Add new employees
+            </button>
           </div>
-        <button className='addBtn' onClick={handleSubmit}> { isEditing ? 'Edit' : 'Add' }</button>
+        </div>
+        <div className="employee-Data"></div>
+        <table className="employee-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" /></th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {employees.map((employee) => (
+              <tr key={employee.id}>
+                <td><input type="checkbox" /></td>
+                <td>{employee.name}</td>
+                <td>{employee.email}</td>
+                <td>{employee.address}</td> 
+                <td>{employee.number}</td> 
+                <td>
+                  <button className='edit-btn' onClick={() => handleEditClick(employee)}>
+                    <FontAwesomeIcon icon={faWrench} />
+                  </button>
+                  <button className='delete-btn' onClick={() => handleDelete(employee.id)}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </div>
-  }
+      {formAdd &&
+        <div className="addF-wrapper">
+          <div className='contain-add-list'> 
+            <div className="header-formAddEdit">
+                <h1> { isEditing ? 'Edit Task' : 'Add Task' }</h1>
+                <button 
+                  className='closeAddEditForm'
+                  onClick={ handleCloseForm }
+                >
+                    x
+                </button>
+            </div>
+            <div className="employees_data column">
+              <div className="input-name column">
+                <span className='Task-title'>Name</span>
+                <input
+                  name='name'
+                  value={employee.name}
+                  className="input-add-task"
+                  placeholder="Type your name here..."
+                  onChange = {handleInputChange}
+                />
+              </div>
+              <div className="input-name column">
+                <span className='Task-title'>Email</span>
+                <input
+                name='email'
+                value={employee.email}
+                className="input-add-task"
+                placeholder="Type your email here..."
+                onChange = {handleInputChange} 
+              />
+              </div>
+              <div className="input-name column">
+                <span className='Task-title'>Address</span>
+                <input
+                  name='address'
+                  value={employee.address}
+                  className="input-add-task"
+                  placeholder="Type your address here..."
+                  onChange = {handleInputChange}
+                />
+              </div>
+              <div className="input-name column">
+                <span className='Task-title'>Phone Number</span>
+                <input
+                  name='number'
+                  value={employee.number}
+                  className="input-add-task"
+                  placeholder="Type your phone here..."
+                  onChange = {handleInputChange}
+                />
+              </div>
+            </div>
+            {!!error && <span style= {{ color: 'red' }}>{ error } </span>}
+            <button className='addBtn' onClick={handleSubmit}> { isEditing ? 'Save' : 'Add' }</button>
+          </div>
+        </div>
+      }
+      <footer>
+      </footer>
     </div>
   )
 }
 
-export default DisplayTask 
+export default Employees_info
 
 
 
