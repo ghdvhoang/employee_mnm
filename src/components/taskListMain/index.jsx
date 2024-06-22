@@ -17,9 +17,24 @@ function Employees_info() {
   }, [])
 
   const handleSubmit = () => {
+    if (!employee.name || !employee.email || !employee.address || !employee.number  || employee.length > 100) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
     if( !employee || employee.length > 100){
       setError(" Ko cho nhập haha ")
       return
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^0\d{9}$/; 
+    if (!emailRegex.test(employee.email)) {
+      setError("Email không hợp lệ");
+      return;
+    }
+    if (!phoneRegex.test(employee.number)) {
+      setError("Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số");
+      return;
     }
     setError('')
     if(isEditing) {
@@ -33,45 +48,32 @@ function Employees_info() {
         } : employee
       );
       setEmployees(updatedEmployees)
-      getEmployee('')
-      setIsEditing(false)
-      setEditingEmployee(null)
-      setFormAdd(false)
+      handleCloseForm();
     }
     else {
       setEmployees(prev => [...prev, {
         id: Date.now(),
-        name:    employee.name,
-        email:   employee.email,
+        name: employee.name,
+        email: employee.email,
         address: employee.address,
-        number:  employee.number 
+        number: employee.number 
       }])
-      setFormAdd(false)
-      getEmployee('')
-      setIsEditing(false)
+      handleCloseForm();
     }
   }
   const handleEditClick = (employee) => {
-    setFormAdd(true)
-    console.log(formAdd)
-    setIsEditing(true)
-    setEditingEmployee({
-      name: employee.name,
-      email: employee.email,
-      address: employee.address,
-      number: employee.number
-    })
-    console.log(isEditing)
+    setEditingEmployee(employee)
     console.log(editingEmployee)
-    getEmployee({
-      name: employee.name,
-      email: employee.email,  
-      address: employee.address, 
-      number: employee.number
-    })
+    setIsEditing(true)
+    console.log(isEditing);
+    getEmployee(employee)
+    console.log(employee);
+    setFormAdd(true)
+    console.log(formAdd);
   }
   const handleAddClick = () => {
     setFormAdd(true)
+    console.log(formAdd);
   }
 
   const handleDelete = (id) => {
