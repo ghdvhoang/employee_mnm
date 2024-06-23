@@ -9,7 +9,7 @@ function Employees_info() {
   const [ employees, setEmployees ] = useState([])
   const [ formAdd, setFormAdd] = useState(false)
   const [ isEditing, setIsEditing ] = useState(false)
-  const [ editingEmployee, setEditingEmployee ] = useState(null);
+  const [ editingEmployee, setEditingEmployee ] = useState(null)
   const [ error, setError ] = useState('')
 
   useEffect(() => {
@@ -38,14 +38,14 @@ function Employees_info() {
     }
     setError('')
     if(isEditing) {
-      const updatedEmployees = employees.map(employee =>
-        employee.id === editingEmployee.id ? {
-          ...employee,
+      const updatedEmployees = employees.map(emp =>
+        emp.id === editingEmployee.id ? {
+          ...emp,
           name: employee.name,
           email: employee.email,
           address: employee.address, 
           number: employee.number
-        } : employee
+        } : emp
       );
       setEmployees(updatedEmployees)
       handleCloseForm();
@@ -61,15 +61,11 @@ function Employees_info() {
       handleCloseForm();
     }
   }
-  const handleEditClick = (employee) => {
-    setEditingEmployee(employee)
-    console.log(editingEmployee)
+  const handleEditClick = (emp) => {
+    setEditingEmployee(emp) 
     setIsEditing(true)
-    console.log(isEditing);
-    getEmployee(employee)
-    console.log(employee);
+    getEmployee(emp)
     setFormAdd(true)
-    console.log(formAdd);
   }
   const handleAddClick = () => {
     setFormAdd(true)
@@ -152,7 +148,7 @@ function Employees_info() {
                 <span className='Task-title'>Name</span>
                 <input
                   name='name'
-                  value={employee.name}
+                  value={employee.name || ''}
                   className="input-add-task"
                   placeholder="Type your name here..."
                   onChange = {handleInputChange}
@@ -162,7 +158,7 @@ function Employees_info() {
                 <span className='Task-title'>Email</span>
                 <input
                 name='email'
-                value={employee.email}
+                value={employee.email || ''}
                 className="input-add-task"
                 placeholder="Type your email here..."
                 onChange = {handleInputChange} 
@@ -172,7 +168,7 @@ function Employees_info() {
                 <span className='Task-title'>Address</span>
                 <input
                   name='address'
-                  value={employee.address}
+                  value={employee.address || ''}
                   className="input-add-task"
                   placeholder="Type your address here..."
                   onChange = {handleInputChange}
@@ -182,7 +178,7 @@ function Employees_info() {
                 <span className='Task-title'>Phone Number</span>
                 <input
                   name='number'
-                  value={employee.number}
+                  value={employee.number || ''}
                   className="input-add-task"
                   placeholder="Type your phone here..."
                   onChange = {handleInputChange}
