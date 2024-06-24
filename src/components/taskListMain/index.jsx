@@ -17,13 +17,13 @@ function Employees_info() {
   }, [])
 
   const handleSubmit = () => {
-    if (!employee.name || !employee.email || !employee.address || !employee.number  || employee.length > 100) {
-      setError("Please fill in all fields.");
+    if (!employee.name || !employee.email || !employee.address || !employee.number ) {
+      setError("Hãy điền đủ các trường thông tin");
       return;
     }
 
-    if( !employee || employee.length > 100){
-      setError(" Ko cho nhập haha ")
+    if(employee.name.length > 100){
+      setError("Tên phải nhỏ hơn 100 kí tự")
       return
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
