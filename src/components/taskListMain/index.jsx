@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, useEffect } from 'react';
 import data from '../../data.json';
 import './TaskList.css'
+import MenuTlu from '../MenuTlu/tlu.jsx'
 
 function Employees_info() {
   const [ employee, getEmployee ] = useState({ name: '', email: '', address: '', number: '' })
@@ -14,8 +15,8 @@ function Employees_info() {
 
   useEffect(() => {
     setEmployees(data)
-  }, [])
-
+  }, []);
+  
   const handleSubmit = () => {
     if (!employee.name || !employee.email || !employee.address || !employee.number ) {
       setError("Hãy điền đủ các trường thông tin");
@@ -69,7 +70,6 @@ function Employees_info() {
   }
   const handleAddClick = () => {
     setFormAdd(true)
-    console.log(formAdd);
   }
 
   const handleDelete = (id) => {
@@ -79,6 +79,7 @@ function Employees_info() {
     const {name, value} = event.target
     getEmployee(prev => ({...prev, [name]: value}))
   }
+
   const handleCloseForm = () => {
     setFormAdd(false)
     setIsEditing(false)
@@ -88,6 +89,7 @@ function Employees_info() {
 
   return (
     <div className="container">
+    <MenuTlu />
       <div className="container-task">
         <div className="header">
           <h1>Manage <b>Employees</b></h1>
